@@ -55,7 +55,7 @@ int main()
 	}
 
 	//hProcess is most likely a pointer to the process in kernel space
-	void* hProcess = OpenProcess(PROCESS_ALL_ACCESS, 0, dwProcessID);
+	HANDLE hProcess = OpenProcess(PROCESS_ALL_ACCESS, 0, dwProcessID);
 
 	if (hProcess && hProcess != INVALID_HANDLE_VALUE)
 	{
@@ -65,7 +65,7 @@ int main()
 			WriteProcessMemory(hProcess, ptrLocation, strDLLPath, strlen(strDLLPath) + 1, 0);
 		}
 
-		void* hThread = CreateRemoteThread(hProcess, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, ptrLocation, 0, 0);
+		HANDLE hThread = CreateRemoteThread(hProcess, 0, 0, (LPTHREAD_START_ROUTINE)LoadLibraryA, ptrLocation, 0, 0);
 
 		if (hThread)
 		{
